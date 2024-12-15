@@ -27,5 +27,6 @@ assistant.db
 # Poetry
 poetry.lock
 
+
 # Test
 test.py
