@@ -25,6 +25,7 @@ var/
 assistant.db
 
 # Poetry
-.poetry.lock
+poetry.lock
 
-.test.py
+# Test
+test.py
