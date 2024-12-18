@@ -1,5 +1,5 @@
 from asist.database import Users
-from datetime import datetime
+import datetime
 
 from .include import hbold
 
@@ -18,8 +18,10 @@ def get_user(id_user):
 
 
 def time_difference(input_time):
-    now = datetime.now()
-    current_time = now.strftime("%H:%M")
+    minsk_timezone = datetime.timezone(datetime.timedelta(hours=3))
+
+    current_datetime = datetime.datetime.now(minsk_timezone)
+    current_time = current_datetime.strftime('%H:%M')
 
     current_hours, current_minutes = map(int, current_time.split(':'))
     input_hours, input_minutes = map(int, input_time.split(':'))
