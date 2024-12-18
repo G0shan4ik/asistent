@@ -21,14 +21,18 @@ def time_difference(input_time):
     now = datetime.now()
     current_time = now.strftime("%H:%M")
 
-    input_datetime = datetime.strptime(input_time, "%H:%M")
-    current_datetime = datetime.strptime(current_time, "%H:%M")
+    current_hours, current_minutes = map(int, current_time.split(':'))
+    input_hours, input_minutes = map(int, input_time.split(':'))
 
-    time_delta = input_datetime - current_datetime
+    current_time_in_minutes = current_hours * 60 + current_minutes
+    input_time_in_minutes = input_hours * 60 + input_minutes
 
-    hours, remainder = divmod(time_delta.seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
-    return "Время уже прошло" if time_delta.days < 0 else f"{hours:02d}:{minutes:02d}"
+    difference_in_minutes = (input_time_in_minutes - current_time_in_minutes) % (24 * 60)
+
+    difference_hours = difference_in_minutes // 60
+    difference_minutes = difference_in_minutes % 60
+
+    return f"{difference_hours:02d}:{difference_minutes:02d}"
 
 def time_to_text(time_str):
     res_str = ''
