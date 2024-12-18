@@ -16,7 +16,7 @@ def start_dev() -> None:
     init()
     logger.info('<-- Init DB -->')
     try:
-        asyncio.run(start_bot())
         logger.info('<-- Start BOT -->')
+        asyncio.run(start_bot())
     except (asyncio.exceptions.CancelledError, KeyboardInterrupt):
         logger.warning('The bot was forcibly stopped')

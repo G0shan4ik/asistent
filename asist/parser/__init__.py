@@ -1,0 +1,1 @@
+from . import pars_course_currencies
