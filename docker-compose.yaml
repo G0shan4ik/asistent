@@ -1,9 +1,9 @@
 version: "3"
 services:
-  ticket_bot:
+  assistant_bot:
     build: .
     stop_signal: SIGINT
-    container_name: ticket_bot
+    container_name: assistant_bot
     restart: always
     env_file:
       - .env
