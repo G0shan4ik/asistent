@@ -29,6 +29,7 @@ class CoursesCurrencies(BaseModel):
     dollar_ruble_by = BigIntegerField(null=True)
     dollar_ruble_ru = BigIntegerField(null=True)
     rouble_ru_by = BigIntegerField(null=True)
+    eu_ru_by = BigIntegerField(null=True)
 
     update_time = DateTimeField(null=True)
 
