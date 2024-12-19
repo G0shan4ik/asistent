@@ -17,7 +17,7 @@ def get_user(id_user):
     return user
 
 
-def time_difference(input_time):
+def time_difference(input_time: str) -> str:
     minsk_timezone = datetime.timezone(datetime.timedelta(hours=3))
 
     current_datetime = datetime.datetime.now(minsk_timezone)
@@ -36,7 +36,7 @@ def time_difference(input_time):
 
     return f"{difference_hours:02d}:{difference_minutes:02d}"
 
-def time_to_text(time_str):
+def time_to_text(time_str: str) -> str:
     res_str = ''
     data_hours = {
         'час': [1, 21],

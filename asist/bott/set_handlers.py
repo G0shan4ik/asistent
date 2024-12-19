@@ -3,6 +3,7 @@ from .states import ClockState
 from .include import Command, Message, FSMContext, F, hbold
 from .keyboards import cancel_kb
 from asist.parser.pars_course_currencies import update_courses
+from .texts import pretty_courses_test
 
 
 @router.message(Command(commands=['clock']))
@@ -16,9 +17,14 @@ async def get_time_before_alarm_clock(message: Message, state: FSMContext):
 
 @router.message(Command(commands=['courses_of_currencies']))
 async def get_time_before_alarm_clock(message: Message, state: FSMContext):
-    data = await update_courses()
+    data: dict = await update_courses()
     print(data)
-    await message.answer('courses_of_currencies')
+    await message.answer(f'Актуальные курсы валют на настоящее время (по мск)')
+    await message.answer(pretty_courses_test(
+        data['dollar_ruble_ru'],
+        data['dollar_ruble_by'],
+        data['rouble_ru_by']
+    ))
 
 @router.message(F.text == "Финансы💸")
 async def finance_module(message: Message):
