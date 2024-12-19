@@ -23,6 +23,7 @@ async def get_courses_of_currencies(message: Message):
     await message.answer(pretty_courses_test(
         data['dollar_ruble_ru'],
         data['dollar_ruble_by'],
+        data['euro_ru_by'],
         data['rouble_ru_by']
     ))
 
