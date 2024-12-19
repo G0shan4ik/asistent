@@ -56,3 +56,9 @@ def time_to_text(time_str: str) -> str:
     res_str += f"{[f'{hbold(item)} {s}' for s, mass in data_hours.items() for item in mass if item == hours][0]},  "
     res_str += [f'{hbold(item)} {s}' for s, mass in data_minutes.items() for item in mass if item == minutes][0]
     return res_str
+
+def get_belarus_time_string() -> str:
+  minsk_utc_offset = 3
+
+  current_time = datetime.datetime.utcnow() + datetime.timedelta(hours=minsk_utc_offset)
+  return current_time.strftime("%H:%M %d.%m.%Y")
