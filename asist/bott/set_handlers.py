@@ -16,9 +16,8 @@ async def get_time_before_alarm_clock(message: Message, state: FSMContext):
 
 
 @router.message(Command(commands=['courses_of_currencies']))
-async def get_time_before_alarm_clock(message: Message, state: FSMContext):
+async def get_courses_of_currencies(message: Message):
     data: dict = await update_courses()
-    print(data)
     await message.answer(f'Актуальные курсы валют на настоящее время (по мск)')
     await message.answer(pretty_courses_test(
         data['dollar_ruble_ru'],
