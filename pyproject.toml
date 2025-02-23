@@ -12,8 +12,13 @@ aiogram = "^3.14.0"
 requests = "^2.32.3"
 bs4 = "^0.0.2"
 lxml = "^4.2.5"
-peewee = "^3.17.8"
 loguru = "^0.7.3"
+sqlalchemy = "^2.0.36"
+fastapi = "^0.115.6"
+pydantic-settings = "^2.7.0"
+psycopg = {extras = ["binary"], version = "^3.2.4"}
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
+pillow = "^11.1.0"
 
 
 [tool.poetry.scripts]
