@@ -1,1 +1,1 @@
-from . import base, currency, user, note, finance
+from . import base, currency, user, check_in, finance

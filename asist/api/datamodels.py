@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from datetime import datetime
 from enum import Enum
 
-from asist.database.models import User, CurrencyExchangeRate, Finance, Note
+from asist.database.models import User, CurrencyExchangeRate, Finance, CheckIn
 
 
 class CreatedModel(BaseModel):
@@ -72,38 +72,28 @@ class CurrencyCreated(BaseModel):
         )
 
 
-class CreateNote(BaseModel):
-    note_name: str
-    description: Optional[str] = None
-    image: Optional[str] = None
-    copy_teg: bool = False
+class CreateCheckIn(BaseModel):
+    check_in_name: str
 
     user_id: int
 
-class UpdateNote(BaseModel):
-    note_name: Optional[str] = None
-    description: Optional[str] = None
-    image: Optional[str] = None
-    copy_teg: bool = False
+class UpdateCheckIn(BaseModel):
+    check_in_name: Optional[str] = None
+    dict_with_dates: Optional[str] = None
 
-class NoteResponse(BaseModel):
+class CheckInResponse(BaseModel):
     id: int
-    note_name: str
-    description: Optional[str] = None
-    image: Optional[str] = None
-    copy_teg: bool = False
+    check_in_name: str
+    dict_with_dates: Optional[str] = None
 
     user_id: int
 
     @classmethod
-    def from_orm(cls, note: Note):
+    def from_orm(cls, check_in: CheckIn):
         return cls(
-            id=note.id,
-            note_name=note.note_name,
-            image=note.image,
-            description=note.description,
-            copy_teg=note.copy_teg,
-            user_id=note.user_id
+            id=check_in.id,
+            check_in_name=check_in.check_in_name,
+            dict_with_dates=check_in.dict_with_dates,
         )
 
 
@@ -134,9 +124,9 @@ class FinanceResponse(BaseModel):
     def from_orm(cls, finance: Finance):
         return cls(
             id=finance.id,
-            source_name=finance.source_name,
+            title=finance.title,
             amount=finance.amount,
             description=finance.description,
             added_at=finance.added_at,
-            user_id=finance.user_id
+            finance_id=finance.finance_id
         )
