@@ -17,14 +17,21 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, nullable=False)
 
 
-class Note(Base):
-    __tablename__ = "notes"
+class CheckIn(Base):
+    __tablename__ = "check_in"
     id: Mapped[int] = mapped_column(Integer(), autoincrement=True, primary_key=True)
 
-    note_name: Mapped[str] = mapped_column(String(60), nullable=False)
-    description: Mapped[str] = mapped_column(String(1024), nullable=True)
-    image: Mapped[str] = mapped_column(String(560), nullable=True)
-    copy_teg: Mapped[bool] = mapped_column(Boolean(), default=False)
+    check_in_name: Mapped[str] = mapped_column(String(20), nullable=False)
+    dict_with_dates: Mapped[str] = mapped_column(String(), nullable=True)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=False)
+
+
+class FinanceGroup(Base):
+    __tablename__ = "finances_group"
+
+    id: Mapped[int] = mapped_column(Integer(), autoincrement=True, primary_key=True)
+    source_name: Mapped[str] = mapped_column(String(60), nullable=True)
 
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=False)
 
@@ -33,12 +40,12 @@ class Finance(Base):
     __tablename__ = "finances"
 
     id: Mapped[int] = mapped_column(Integer(), autoincrement=True, primary_key=True)
-    source_name: Mapped[str] = mapped_column(String(60), nullable=True)
+    title: Mapped[str] = mapped_column(String(60), nullable=True)
     amount: Mapped[int] = mapped_column(Integer(), nullable=True)
     description: Mapped[str] = mapped_column(String(1024), nullable=True)
     added_at: Mapped[datetime] = mapped_column(nullable=True)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=False)
+    finance_id: Mapped[int] = mapped_column(ForeignKey('finances_group.id'), nullable=False)
 
 
 class CurrencyExchangeRate(Base):
