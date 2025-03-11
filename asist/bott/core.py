@@ -8,9 +8,13 @@ from aiogram.methods import DeleteWebhook
 
 from os import getenv
 from dotenv import load_dotenv
+from loguru import logger
+
+from .helpers import update_currency
 
 
 load_dotenv()
+
 
 admin_id = [int(i) for i in getenv('ADMIN')[1:-1].split(', ')]
 bot_ = Bot(
@@ -45,5 +49,13 @@ async def start_bot() -> None:
     dp.shutdown.register(on_shutdown)
 
     await asyncio.gather(
-        dp.start_polling(bot_)
+        dp.start_polling(bot_),
+        update_currency()
     )
+
+async def run_bot():
+    try:
+        logger.success('Starting bot...')
+        await start_bot()
+    except (asyncio.CancelledError, KeyboardInterrupt):
+        logger.warning('Bot was stopped')
