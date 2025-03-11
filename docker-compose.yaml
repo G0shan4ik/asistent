@@ -17,7 +17,7 @@ services:
         networks:
             - assist-network
 
-    postgres_db:
+    db:
         image: postgres:14-alpine
         container_name: assist_postgres_db
         restart: always
