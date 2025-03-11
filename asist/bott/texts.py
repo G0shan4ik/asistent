@@ -2,11 +2,12 @@ from random import choice
 
 from aiogram.utils.markdown import hbold
 
+from PIL import ImageFont, ImageDraw, Image
+
 
 # Functions (work with pretty text)
 def count_length(text: str) -> str:
-    from PIL import ImageFont, ImageDraw, Image
-    font = ImageFont.truetype("arial.ttf", 14)
+    font = ImageFont.truetype("/usr/share/fonts/truetype/arial.ttf", 14)
 
     image = Image.new("RGB", (1, 1))
     draw = ImageDraw.Draw(image)
