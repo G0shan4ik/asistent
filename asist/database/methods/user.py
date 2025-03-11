@@ -9,7 +9,7 @@ class UserManager(BaseDatabaseDep):
     async def create_user(self, user: UserCreate) -> int:
         _user: Optional[User] = await self.get_user_by_id(user_id=user.id)
         if _user:
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.warning(f'USER (user_id == {str(user.id)[:-3]}***) already exists')
 
             return _user.id
@@ -22,7 +22,7 @@ class UserManager(BaseDatabaseDep):
         result = (await self.session.execute(stmt)).scalar()
         await self.session.commit()
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.success(f'SUCCESS created USER (user_id == {str(result)[:-3]}***)')
 
         return result
@@ -52,7 +52,7 @@ class UserManager(BaseDatabaseDep):
             await self.session.execute(stmt)
             await self.session.commit()
 
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.info(
                     f'The password {"HAS BEEN UPDATED" if __flag else "IS SET"} '
                     f'for the user (user_id == {str(user.id)[:-3]}***)'

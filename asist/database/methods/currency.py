@@ -14,7 +14,7 @@ class CurrencyManager(BaseDatabaseDep):
     async def get_currency(self) -> CurrencyCreated:
         async with aiohttp.ClientSession() as aio_session:
             async with aio_session.get(self.URL) as response:
-                if getenv("DEBUG", None):
+                if bool(getenv("DEBUG", False)):
                     logger.info(f'PARS_CURRENCY response status code == {response.status}')
 
                 data = (await response.json())[0]
@@ -43,7 +43,7 @@ class CurrencyManager(BaseDatabaseDep):
             await self.session.execute(stmt2)
             await self.session.commit()
 
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.success(f'CREATE CURRENCY')
 
             return currency
@@ -58,14 +58,14 @@ class CurrencyManager(BaseDatabaseDep):
             await self.session.execute(stmt3)
             await self.session.commit()
 
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.success(f'UPDATE CURRENCY')
 
             return currency
 
     @timer
     async def run_currency_update(self) -> CurrencyCreated:
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.info(f'Start PARS currency!')
         _currency: CurrencyCreated = await self.update_currency(await self.get_currency())
         return _currency

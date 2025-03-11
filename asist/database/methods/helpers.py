@@ -15,7 +15,7 @@ def timer(func):
         end_time = time.time()
         elapsed_time = end_time - start_time
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.info(f"Asynchronous function '{func.__name__}' completed for {elapsed_time:.4f} seconds.")
 
         return result
@@ -27,7 +27,7 @@ def timer(func):
         end_time = time.time()
         elapsed_time = end_time - start_time
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.info(f"Synchronous function '{func.__name__}' completed for {elapsed_time:.4f} seconds.")
 
         return result

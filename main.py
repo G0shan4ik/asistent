@@ -22,7 +22,7 @@ async def main():
 def start_dev() -> None:
     logger.success('Starting application...')
 
-    if getenv("DEBUG", False):
+    if bool(getenv("DEBUG", False)):
         logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 
     try:

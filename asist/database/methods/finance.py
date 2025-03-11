@@ -18,7 +18,7 @@ class FinanceManager(BaseDatabaseDep):
         result = (await self.session.execute(stmt)).scalar_one_or_none()
         await self.session.commit()
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.info(f'Create Finance for user (user_id == {finance.user_id})')
 
         return result
@@ -39,7 +39,7 @@ class FinanceManager(BaseDatabaseDep):
             }
             update_data = {k: v for k, v in data.items() if k in allowed_fields}
             if not update_data:
-                if getenv("DEBUG", None):
+                if bool(getenv("DEBUG", False)):
                     logger.error(f'Error update Finance (update_data is None) (finance_id == {finance_id})')
                 return False
 
@@ -51,12 +51,12 @@ class FinanceManager(BaseDatabaseDep):
             await self.session.execute(stmt)
             await self.session.commit()
 
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.success(f'Success update Finance (finance_id == {finance_id})')
 
             return True
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.error(f'Error Delete finance (NOT FOUND FINANCE by ID) (finance_id == {finance_id})')
 
         return False
@@ -69,12 +69,12 @@ class FinanceManager(BaseDatabaseDep):
             await self.session.execute(stmt)
             await self.session.commit()
 
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.info(f'Delete Finance (finance_id == {finance_id})')
 
             return True
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.error(f'Error Delete finance (NOT FOUND FINANCE by ID) (finance_id == {finance_id})')
 
         return False

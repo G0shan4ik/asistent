@@ -33,7 +33,7 @@ class CheckInManager(BaseDatabaseDep):
             }
             update_data = {k: v for k, v in data.items() if k in allowed_fields}
             if not update_data:
-                if getenv("DEBUG", None):
+                if bool(getenv("DEBUG", False)):
                     logger.error(f'Error update CheckIn (update_data is None) (check_in_id == {check_in_id})')
                 return False
 
@@ -45,12 +45,12 @@ class CheckInManager(BaseDatabaseDep):
             await self.session.execute(stmt)
             await self.session.commit()
 
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.success(f'Success update CheckIn (check_in_id == {check_in_id})')
 
             return True
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.error(f'Error Delete CheckIn (NOT FOUND CheckIn by ID) (check_in_id == {check_in_id})')
 
         return False
@@ -64,12 +64,12 @@ class CheckInManager(BaseDatabaseDep):
             await self.session.execute(stmt)
             await self.session.commit()
 
-            if getenv("DEBUG", None):
+            if bool(getenv("DEBUG", False)):
                 logger.info(f'Success DELETED CheckIn (check_in_id == {check_in_id})')
 
             return True
 
-        if getenv("DEBUG", None):
+        if bool(getenv("DEBUG", False)):
             logger.error(f'Error Delete CheckIn (NOT FOUND CheckIn by ID) (check_in_id == {check_in_id})')
 
         return False
