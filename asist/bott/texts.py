@@ -2,23 +2,15 @@ from random import choice
 
 from aiogram.utils.markdown import hbold
 
-from PIL import ImageFont, ImageDraw, Image
 
-
-# Functions (work with pretty text)
 def count_length(text: str) -> str:
-    font = ImageFont.truetype("/usr/share/fonts/truetype/arial.ttf", 14)
+    reference_text = "Банк покупает  "
+    space_per_char = 1.5  # Количество пробелов на символ (подбирается эмпирически)
 
-    image = Image.new("RGB", (1, 1))
-    draw = ImageDraw.Draw(image)
+    diff = len(reference_text) - len(text)
+    spaces = int(diff * space_per_char)
 
-    bbox1 = draw.textbbox((0, 0), 'Банк покупает  ', font=font)
-    width1 = bbox1[2] - bbox1[0]
-
-    bbox2 = draw.textbbox((0, 0), text, font=font)
-    width2 = bbox2[2] - bbox2[0]
-    return int((width1 - width2) / 4) * ' ' + '  '
-
+    return ' ' * max(spaces, 0) + '  ' + '  '
 
 # GLOBAL
 rand_animal_emoji = lambda : choice(['🦅', '🐝', '🐥', '🐨', '🦁', '🐰', '🦊', '🐼', '🐷', '🐸', '🐙', '🦖', '🐳', '🐬', '🐊', '🦧', '🐉', '🐁', '🦥', '🦩', '🦜', '🦤'])

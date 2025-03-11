@@ -20,7 +20,6 @@ fastapi = "^0.115.6"
 pydantic-settings = "^2.7.0"
 psycopg = {extras = ["binary"], version = "^3.2.4"}
 uvicorn = {extras = ["standard"], version = "^0.34.0"}
-pillow = "^11.1.0"
 
 
 [tool.poetry.scripts]
