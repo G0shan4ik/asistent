@@ -24,8 +24,8 @@ app = FastAPI(
 async def run_api():
     config = Config(
         app=app,
-        host=getenv("API_HOST", False),
-        port=int(getenv("API_PORT", False)),
+        host="0.0.0.0",
+        port=8000,
         reload=bool(getenv("DEBUG", False)),
         log_level="info" if getenv("DEBUG") else "warning"
     )
