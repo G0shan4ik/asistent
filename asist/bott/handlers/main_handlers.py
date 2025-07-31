@@ -4,12 +4,13 @@ from asist.bott.mixins.finance_mixin import FinanceMixin
 from asist.bott.mixins.check_in_mixin import CheckInMixin
 from asist.bott.include import FSMContext, hbold, CallbackQuery, GREET_TEXT, pretty_courses_test, START_CHECK_IN_TEXT
 from asist.bott.keyboards import constructor_kb, start_kb
-from .states import ClockState
+from .states.clock_state import ClockState
 
 
 @router.callback_query(lambda query: query.data.startswith('main_menu'))
 async def return_to_main_menu(query: CallbackQuery, state: FSMContext):
     await state.clear()
+
     await bot_.delete_message(
         chat_id=query.message.chat.id,
         message_id=query.message.message_id

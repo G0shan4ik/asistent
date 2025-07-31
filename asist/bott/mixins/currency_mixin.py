@@ -1,4 +1,4 @@
-from .include import BaseClientManager, getenv, Optional
+from .include import BaseClientManager, getenv
 
 
 class CurrencyMixin(BaseClientManager):

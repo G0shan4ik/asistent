@@ -5,7 +5,7 @@ from asist.bott.include import (
     CALCULATE_MENU, CURRENCY_TEXT, CURRENCY_TEXT2
 )
 from asist.bott.keyboards import constructor_kb
-from .states import CountMoneyState
+from .states.currency_state import CountMoneyState
 
 
 @router.callback_query(lambda query: query.data.startswith('calculate'))

@@ -27,7 +27,7 @@ async def run_api():
         host=getenv("API_HOST"),
         port=int(getenv("API_PORT")),
         reload=bool(getenv("DEBUG", False)),
-        log_level="info" if getenv("DEBUG") else "warning"
+        # log_level="info" if getenv("DEBUG") else "warning"
     )
     server = Server(config)
     await server.serve()

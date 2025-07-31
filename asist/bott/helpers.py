@@ -1,5 +1,6 @@
 import datetime
 import asyncio
+import re
 from typing import Optional
 from calendar import monthcalendar
 
@@ -163,3 +164,86 @@ def get_month_btn(dct: dict, year: int, month: str, _check_in_id: int) -> dict:
 
 
     return btn
+
+
+def calculate_due_date(debt_due_date: str) -> str | bool:
+    MONTHS_RU = {
+        "января": 1, "февраля": 2, "марта": 3, "апреля": 4,
+        "мая": 5, "июня": 6, "июля": 7, "августа": 8,
+        "сентября": 9, "октября": 10, "ноября": 11, "декабря": 12
+    }
+
+    try:
+        now = datetime.datetime.now()
+        text = debt_due_date.strip().lower()
+
+        # --- Обработка "завтра", "послезавтра", "через неделю", "через 2 недели" ---
+        if text == "завтра":
+            return (now + datetime.timedelta(days=1)).strftime("%Y-%m-%d %H:%M:%S")
+        if text == "послезавтра":
+            return (now + datetime.timedelta(days=2)).strftime("%Y-%m-%d %H:%M:%S")
+        if text == "через неделю":
+            return (now + datetime.timedelta(days=7)).strftime("%Y-%m-%d %H:%M:%S")
+        match = re.match(r'через\s+(\d+)\s+нед(елю|ели|ель)', text)
+        if match:
+            weeks = int(match.group(1))
+            return (now + datetime.timedelta(weeks=weeks)).strftime("%Y-%m-%d %H:%M:%S")
+
+        # --- Обработка "через N дней" ---
+        match = re.match(r'через\s+(\d+)\s+д(ень|ня|ней)', text)
+        if match:
+            days = int(match.group(1))
+            return (now + datetime.timedelta(days=days)).strftime("%Y-%m-%d %H:%M:%S")
+
+        # --- Обработка "1 августа" ---
+        match = re.match(r'(\d{1,2})\s+([а-яё]+)', text)
+        if match:
+            day = int(match.group(1))
+            month_str = match.group(2)
+
+            if month_str not in MONTHS_RU:
+                return False
+
+            month = MONTHS_RU[month_str]
+            year = now.year
+            try:
+                target_date = datetime.datetime(year, month, day, now.hour, now.minute, now.second)
+            except ValueError:
+                return False
+
+            if target_date < now:
+                target_date = datetime.datetime(year + 1, month, day, now.hour, now.minute, now.second)
+
+            return target_date.strftime("%Y-%m-%d %H:%M:%S")
+
+        return False
+
+    except Exception:
+        return False
+
+
+def get_data_kb(debt_state: str) -> dict:
+    if debt_state == 'priority':
+        return {
+            'Low  🟢': 'priority#low',
+            'Average  🟡': 'priority#average',
+            'High  🔴': 'priority#high',
+        }
+    return {}
+
+def check_valid_debt_data(debt_data: str, debt_state: str) -> bool | list[bool|str]:
+    if debt_state == 'amount':
+        if len(debt_data.split(' ')) != 2:
+            return [False, 'Некорректный формат ввода данных❗️']
+        amount, currency = debt_data.split(' ')
+        if not amount.isdigit():
+            return [False, 'Некорректный формат ввода суммы долга❗️']
+        if currency not in ['BYN', 'USD', 'EUR', 'RUB']:
+            return [False, 'Некорректный формат ввода валюты❗️']
+    elif debt_state == 'paid':
+        if not debt_data.isdigit():
+            return [False, 'Некорректный формат ввода суммы долга❗️']
+    elif debt_state == 'due_date':
+        if not calculate_due_date(debt_due_date=debt_data):
+            return [False, 'Некорректный формат ввода даты погашения долга❗️']
+    return True

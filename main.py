@@ -14,7 +14,7 @@ if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 async def main():
-    api_task = asyncio  .create_task(run_api())
+    api_task = asyncio.create_task(run_api())
     bot_task = asyncio.create_task(run_bot())
 
     await asyncio.gather(api_task, bot_task, return_exceptions=True)

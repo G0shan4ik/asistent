@@ -8,13 +8,24 @@ def start_kb():
     return InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text='Финансы🤑',
+                InlineKeyboardButton(text='Финансы 🤑',
                                      callback_data=f'finances'),
-                InlineKeyboardButton(text='Check in☑️',
+                InlineKeyboardButton(text='Check in ☑️',
                                      callback_data=f'check_in')
             ],
-            [InlineKeyboardButton(text='Курсы валют📉', callback_data=f'currency')],
-            [InlineKeyboardButton(text='Будильник⏰', callback_data=f'clock')]
+            [
+                InlineKeyboardButton(text='Дом 🏡',
+                                     callback_data=f'house'),
+                InlineKeyboardButton(text='Авто 🚔',
+                                     callback_data=f'car')
+            ],
+            [
+                InlineKeyboardButton(text='Курсы валют 📉',
+                                     callback_data=f'currency'),
+                InlineKeyboardButton(text='Долги 🚫',
+                                     callback_data=f'debts')
+            ],
+            [InlineKeyboardButton(text='Будильник ⏰', callback_data=f'clock')]
         ]
     )
 
@@ -23,7 +34,7 @@ def constructor_kb(
         join: bool = True,
         num: int = 1,
         cancel: bool = False,
-        name_cancel: str = 'Назад',
+        name_cancel: str = 'Назад ↩️',
         prefix_cancel: str = 'main_menu'
 ):
     inline_keyboard = []

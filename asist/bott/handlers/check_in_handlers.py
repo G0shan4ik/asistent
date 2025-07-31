@@ -5,7 +5,7 @@ from asist.bott.mixins.check_in_mixin import CheckInMixin
 from asist.bott.include import START_CHECK_IN_TEXT, CallbackQuery
 from asist.bott.keyboards import constructor_kb
 from asist.bott.helpers import get_month_calendar, get_year_month, get_today_date, get_month_btn
-from .states import CheckInNameState
+from .states.check_in_state import CheckInNameState
 
 from ast import literal_eval
 

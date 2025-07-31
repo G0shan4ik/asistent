@@ -1,1 +1,1 @@
-from . import main_handlers, states, currency_handlers, check_in_handlers
+from . import main_handlers, states, currency_handlers, check_in_handlers, debts_handlers
